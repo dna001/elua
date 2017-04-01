@@ -397,12 +397,12 @@ pio_type platform_pio_op( unsigned port, pio_type pinmask, int op )
 
 // All possible STM32 uarts defs
 static UART_HandleTypeDef stm32_uart_hnd[2];
-USART_TypeDef *const stm32_usart[] = { USART1, USART2 };
-const u8 stm32_usart_AF[] = { GPIO_AF7_USART1, GPIO_AF7_USART2 };
-static GPIO_TypeDef *const usart_gpio_rx_port[] = { GPIOA, GPIOA };
-static GPIO_TypeDef *const usart_gpio_tx_port[] = { GPIOA, GPIOA };
-static const u16 usart_gpio_rx_pin[] = { GPIO_PIN_10, GPIO_PIN_2 };
-static const u16 usart_gpio_tx_pin[] = { GPIO_PIN_9, GPIO_PIN_2 };
+USART_TypeDef *const stm32_usart[] = { USART1, USART6 };
+const u8 stm32_usart_AF[] = { GPIO_AF7_USART1, GPIO_AF8_USART6 };
+static GPIO_TypeDef *const usart_gpio_rx_port[] = { GPIOA, GPIOC };
+static GPIO_TypeDef *const usart_gpio_tx_port[] = { GPIOB, GPIOC };
+static const u16 usart_gpio_rx_pin[] = { GPIO_PIN_10, GPIO_PIN_7 };
+static const u16 usart_gpio_tx_pin[] = { GPIO_PIN_7, GPIO_PIN_6 };
 
 static GPIO_TypeDef *const usart_gpio_hwflow_port[] = { GPIOA, GPIOA };
 static const u16 usart_gpio_cts_pin[] = { GPIO_PIN_11, GPIO_PIN_0 };
@@ -528,7 +528,7 @@ void platform_s_uart_send( unsigned id, u8 data )
   else
 #endif
   {
-    HAL_UART_Transmit( &stm32_uart_hnd[ id ], &data, 1, 0 );
+    HAL_UART_Transmit( &stm32_uart_hnd[ id ], &data, 1, 100 );
   }
 }
 
